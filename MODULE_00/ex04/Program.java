@@ -58,8 +58,60 @@ public class Program {
         public int size() {
             return pairs.size();
         }
-    }
 
+        public void sort() {
+            pairs.sort((a, b) -> {
+                if (a.getCount() == b.getCount())
+                    return a.getCharacter() - b.getCharacter();
+                return b.getCount() - a.getCount();
+            });
+        }
+
+        public int getCountWidth(Pairs pair) {
+            if (pair.getCount() >= 100) return 3;
+            else if (pair.getCount() >= 10) return 2;
+            else return 1;
+        }
+
+        public void printGraph() {
+            if (pairs.isEmpty()) return;
+            
+            int displayCount = Math.min(10, pairs.size());
+            int maxCount = pairs.get(0).getCount();
+            int graphHeight = 10;
+        
+            for (int row = graphHeight; row >= 1; row--) {
+                for (int i = 0; i < displayCount; i++) {
+                    Pairs pair = pairs.get(i);
+                    double proportion = (double) pair.getCount() / maxCount;
+                    int height = (int) Math.round(proportion * graphHeight);
+                    
+                    int countWidth = getCountWidth(pair);
+                    
+                    if (height == row) {
+                        if (i > 0) System.out.print(" ");
+                        System.out.print(pair.getCount());
+                    } else if (height > row) {
+                        if (i > 0) System.out.print(" ");
+                        for (int j = 1; j < countWidth; j++) System.out.print(" ");
+                        System.out.print("#");
+                    } else {
+                        if (i > 0) System.out.print(" ");
+                        for (int j = 0; j < countWidth; j++) System.out.print(" ");
+                    }
+                }
+                System.out.println();
+            }
+        
+            for (int i = 0; i < displayCount; i++) {
+                if (i > 0) System.out.print(" ");
+                int countWidth = getCountWidth(pairs.get(i));
+                for (int j = 1; j < countWidth; j++) System.out.print(" ");
+                System.out.print(pairs.get(i).getCharacter());
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args) {
         PairsList pairsList = new PairsList();
@@ -71,10 +123,10 @@ public class Program {
             else
                 pairsList.add(character);
         }
+        pairsList.sort();
 
-        for (Pairs pair : pairsList.getPairs()) {
-            System.out.println(pair.getCharacter() + " " + pair.getCount());
-        }
+        pairsList.printGraph();
         scanner.close();
     }
 }
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
