@@ -78,23 +78,25 @@ public class Program {
             
             int displayCount = Math.min(10, pairs.size());
             int maxCount = pairs.get(0).getCount();
-            int graphHeight = 10;
+            int graphHeight = 9;
         
-            for (int row = graphHeight; row >= 1; row--) {
+            for (int row = graphHeight; row >= 0; row--) {
                 for (int i = 0; i < displayCount; i++) {
                     Pairs pair = pairs.get(i);
                     double proportion = (double) pair.getCount() / maxCount;
-                    int height = (int) Math.round(proportion * graphHeight);
+                    int height = (int) Math.floor(proportion * graphHeight);
                     
                     int countWidth = getCountWidth(pair);
-                    
-                    if (height == row) {
-                        if (i > 0) System.out.print(" ");
-                        System.out.print(pair.getCount());
-                    } else if (height > row) {
-                        if (i > 0) System.out.print(" ");
-                        for (int j = 1; j < countWidth; j++) System.out.print(" ");
-                        System.out.print("#");
+        
+                    if (height >= row) {
+                        if (height == row) {
+                            if (i > 0) System.out.print(" ");
+                            System.out.print(pair.getCount());
+                        } else {
+                            if (i > 0) System.out.print(" ");
+                            for (int j = 1; j < countWidth; j++) System.out.print(" ");
+                            System.out.print("#");
+                        }
                     } else {
                         if (i > 0) System.out.print(" ");
                         for (int j = 0; j < countWidth; j++) System.out.print(" ");
